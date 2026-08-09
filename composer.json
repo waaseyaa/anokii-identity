@@ -1,0 +1,37 @@
+{
+    "name": "waaseyaa/anokii-identity",
+    "description": "Canonical, community-scoped Anokii Identity capability for Waaseyaa applications.",
+    "type": "library",
+    "license": "GPL-2.0-or-later",
+    "require": {
+        "php": "^8.5",
+        "symfony/http-foundation": "^7.0",
+        "symfony/uid": "^7.0",
+        "waaseyaa/access": "^0.1.0-alpha.293",
+        "waaseyaa/anokii-core": "dev-main",
+        "waaseyaa/entity": "^0.1.0-alpha.293",
+        "waaseyaa/foundation": "^0.1.0-alpha.293",
+        "waaseyaa/routing": "^0.1.0-alpha.293"
+    },
+    "autoload": {
+        "psr-4": {
+            "Anokii\\Identity\\": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "0.1.x-dev"
+        },
+        "waaseyaa": {
+            "providers": [
+                "Anokii\\Identity\\IdentityServiceProvider"
+            ],
+            "policies": [
+                "Anokii\\Identity\\Access\\IdentityPillarAccessPolicy"
+            ],
+            "migrations": "migrations"
+        }
+    },
+    "minimum-stability": "alpha",
+    "prefer-stable": true
+}
