@@ -8,7 +8,7 @@ use Anokii\Identity\Entity\Pillar;
 use Anokii\Identity\PillarService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Waaseyaa\Access\AuthorizationPrincipalInterface;
+use Waaseyaa\Access\DecisionAccountResolver;
 use Waaseyaa\Access\Gate\GateInterface;
 use Waaseyaa\Entity\EntityTypeManager;
 use Waaseyaa\Foundation\Community\CommunityContextInterface;
@@ -24,8 +24,11 @@ final readonly class HostIdentityController
 
     public function index(Request $request): Response
     {
-        $principal = $request->attributes->get('_account');
-        if (!$principal instanceof AuthorizationPrincipalInterface || !$principal->isAuthenticated()) {
+        $principal = DecisionAccountResolver::resolve(
+            $request->attributes->get('_authorization_principal'),
+            $request->attributes->get('_account'),
+        );
+        if ($principal === null || !$principal->isAuthenticated()) {
             return new Response(
                 'Authentication required.',
                 Response::HTTP_UNAUTHORIZED,
