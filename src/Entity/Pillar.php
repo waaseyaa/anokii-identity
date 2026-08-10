@@ -68,7 +68,7 @@ final class Pillar extends ContentEntityBase implements RevisionableInterface
     #[Field(read: FieldReadLevel::Public)] public int $editor_uid = 0;
     #[Field(read: FieldReadLevel::Public)] public string $editor_label = '';
     #[Field(read: FieldReadLevel::Public)] public string $updated_at = '';
-    #[Field(read: FieldReadLevel::Public)] public string $revision_log = '';
+    #[Field(read: FieldReadLevel::Internal)] public string $revision_log = '';
 
     /** Valid maturity statuses, in display order. */
     public const STATUSES = ['defined', 'draft', 'work', 'gap'];
