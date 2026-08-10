@@ -9,7 +9,7 @@ use Anokii\Identity\PillarService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Waaseyaa\Access\AuthorizationPrincipalInterface;
-use Waaseyaa\Access\EntityAccessHandler;
+use Waaseyaa\Access\Gate\GateInterface;
 use Waaseyaa\Entity\EntityTypeManager;
 use Waaseyaa\Foundation\Community\CommunityContextInterface;
 
@@ -18,7 +18,7 @@ final readonly class HostIdentityController
 {
     public function __construct(
         private EntityTypeManager $entities,
-        private EntityAccessHandler $access,
+        private GateInterface $access,
         private CommunityContextInterface $community,
     ) {}
 
@@ -47,7 +47,7 @@ final readonly class HostIdentityController
 
         $pillars = [];
         foreach ($this->entities->getRepository('identity_pillar')->findBy(['langcode' => PillarService::DEFAULT_LANGCODE]) as $entity) {
-            if (!$entity instanceof Pillar || !$this->access->check($entity, 'view', $principal)->isAllowed()) {
+            if (!$entity instanceof Pillar || !$this->access->allows(GateInterface::VIEW, $entity, $principal)) {
                 continue;
             }
             $pillars[] = [
